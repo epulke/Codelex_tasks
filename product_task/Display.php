@@ -12,15 +12,21 @@ class Display
 
     public function displayChoice(): void
     {
-        echo "-------------------------" . PHP_EOL;
-        echo "What do you want to do? " . PHP_EOL;
-        echo "1 | View products" . PHP_EOL;
-        echo "2 | Add new product" . PHP_EOL;
-        echo "0 | Exit" . PHP_EOL;
+        while (true)
+        {
+            echo "-------------------------" . PHP_EOL;
+            echo "What do you want to do? " . PHP_EOL;
+            echo "1 | View products" . PHP_EOL;
+            echo "2 | Add new product" . PHP_EOL;
+            echo "3 | Remove existing product" . PHP_EOL;
+            echo "0 | Exit" . PHP_EOL;
 
-        $this->choice = (int) readline("Enter number: ");
+            $this->choice = (int) readline("Enter number: ");
 
-        echo "-------------------------" . PHP_EOL;
+            echo "-------------------------" . PHP_EOL;
+            $this->checkChoice();
+        }
+
     }
 
     public function getChoice(): ?int
@@ -43,6 +49,19 @@ class Display
                 $price = (int) readline("Enter price: ");
                 $this->displayedList->addToList(new Product($name, $quantity, $price));
                 break;
+            case 3:
+                $name = readline("Enter name: ");
+                foreach ($this->displayedList->getProductList() as $item)
+                {
+                    /** @var Product $item */
+                    if ($item->getName() === $name)
+                    {
+                        $this->displayedList->removeFromList($item);
+                    }
+                }
+                break;
+            default:
+                echo "Invalid input!";
         }
 
     }

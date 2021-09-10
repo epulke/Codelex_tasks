@@ -21,6 +21,13 @@ class ProductList
         $this->saveList();
     }
 
+    public function removeFromList(Product $item): void
+    {
+        $key = array_search($item, $this->productList);
+        unset($this->productList[$key]);
+        $this->saveList();
+    }
+
     public function getProductList(): array
     {
         return $this->productList;
